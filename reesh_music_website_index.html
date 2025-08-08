@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reesh — Official Site</title>
+  <meta name="description" content="Reesh — music, videos, shows, and contact." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { color-scheme: dark; }
+    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji"; }
+    .glass { backdrop-filter: blur(10px); background: rgba(255,255,255,0.06); }
+    .card { border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,.25); }
+    .link { text-decoration: underline; text-underline-offset: 3px; }
+  </style>
+</head>
+<body class="bg-neutral-950 text-neutral-100">
+  <!-- Header -->
+  <header class="sticky top-0 z-50 glass border-b border-neutral-800/60">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="#top" class="text-xl font-extrabold tracking-tight">REESH</a>
+      <nav class="hidden sm:flex gap-6 text-sm">
+        <a href="#music" class="hover:opacity-80">Music</a>
+        <a href="#videos" class="hover:opacity-80">Videos</a>
+        <a href="#shows" class="hover:opacity-80">Shows</a>
+        <a href="#about" class="hover:opacity-80">About</a>
+        <a href="#contact" class="hover:opacity-80">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="top" class="relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30 pointer-events-none" style="background: radial-gradient(800px 400px at 10% 20%, rgba(0,200,255,.25), transparent 60%), radial-gradient(600px 300px at 90% 10%, rgba(255,0,160,.2), transparent 60%), radial-gradient(900px 500px at 50% 120%, rgba(120,0,255,.2), transparent 60%);"></div>
+    <div class="max-w-6xl mx-auto px-4 py-20 sm:py-28 flex flex-col sm:flex-row gap-10 items-center">
+      <div class="flex-1">
+        <h1 class="text-4xl sm:text-6xl font-extrabold leading-tight">Reesh<br><span class="text-neutral-400">Bollytekk • Rap • Producer</span></h1>
+        <p class="mt-5 text-neutral-300 max-w-xl">Official hub for music, visuals, and show dates. Stream tracks, watch videos, and hit me for bookings/collabs.</p>
+        <div class="mt-8 flex gap-3 flex-wrap">
+          <a href="#music" class="px-5 py-3 rounded-2xl bg-white text-black font-semibold">Listen now</a>
+          <a href="#contact" class="px-5 py-3 rounded-2xl border border-neutral-700 hover:border-neutral-500">Book me</a>
+        </div>
+        <div class="mt-6 flex items-center gap-4 text-sm text-neutral-400">
+          <!-- Replace with your actual links -->
+          <a class="hover:text-white" href="https://open.spotify.com/" target="_blank" rel="noopener">Spotify</a>
+          <span>•</span>
+          <a class="hover:text-white" href="https://soundcloud.com/" target="_blank" rel="noopener">SoundCloud</a>
+          <span>•</span>
+          <a class="hover:text-white" href="https://music.apple.com/" target="_blank" rel="noopener">Apple Music</a>
+          <span>•</span>
+          <a class="hover:text-white" href="https://www.youtube.com/" target="_blank" rel="noopener">YouTube</a>
+          <span>•</span>
+          <a class="hover:text-white" href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+      <div class="flex-1 w-full">
+        <div class="card overflow-hidden border border-neutral-800 bg-gradient-to-br from-neutral-900 to-neutral-950 p-4">
+          <div class="p-4 rounded-xl bg-neutral-900/60 border border-neutral-800">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-xs uppercase text-neutral-400">Now Playing</p>
+                <h3 id="nowTitle" class="text-lg font-semibold">—</h3>
+                <p id="nowTime" class="text-xs text-neutral-400">0:00 / 0:00</p>
+              </div>
+              <button id="playPause" class="px-4 py-2 rounded-xl border border-neutral-700 hover:border-neutral-500">Play</button>
+            </div>
+            <input id="seek" type="range" min="0" max="100" value="0" class="mt-4 w-full">
+            <audio id="player" preload="metadata"></audio>
+          </div>
+          <ul id="queue" class="mt-4 divide-y divide-neutral-800"></ul>
+        </div>
+        <p class="text-xs text-neutral-500 mt-2">Drop your .mp3/.wav into <code>/assets/tracks/</code> and edit the list in the HTML.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Music -->
+  <section id="music" class="max-w-6xl mx-auto px-4 py-14">
+    <h2 class="text-2xl sm:text-3xl font-bold">Music</h2>
+    <p class="text-neutral-300 mt-2 max-w-2xl">Stream singles and projects below. Click a track to load it into the player. You can also embed full albums from Spotify/SoundCloud further down.</p>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6" id="tracksGrid"></div>
+
+    <!-- Optional embeds -->
+    <div class="mt-10 grid md:grid-cols-2 gap-6">
+      <div class="card border border-neutral-800 p-4">
+        <h3 class="font-semibold mb-3">Spotify Embed</h3>
+        <!-- Replace src with your album/playlist link -->
+        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M?utm_source=generator" width="100%" height="352" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
+      <div class="card border border-neutral-800 p-4">
+        <h3 class="font-semibold mb-3">SoundCloud Embed</h3>
+        <!-- Replace src with your track/playlist link -->
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/293&color=%23ff5500&inverse=false&auto_play=false&show_user=true"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Videos -->
+  <section id="videos" class="max-w-6xl mx-auto px-4 py-14">
+    <h2 class="text-2xl sm:text-3xl font-bold">Videos</h2>
+    <p class="text-neutral-300 mt-2">Official videos, live clips, behind-the-scenes.</p>
+    <div class="grid md:grid-cols-2 gap-6 mt-6">
+      <!-- Replace with your YouTube video IDs -->
+      <iframe class="w-full aspect-video card border border-neutral-800" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      <iframe class="w-full aspect-video card border border-neutral-800" src="https://www.youtube.com/embed/oHg5SJYRHA0" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <!-- Shows -->
+  <section id="shows" class="max-w-6xl mx-auto px-4 py-14">
+    <h2 class="text-2xl sm:text-3xl font-bold">Shows</h2>
+    <div class="mt-4 card border border-neutral-800 p-4">
+      <ul id="showsList" class="space-y-3 text-neutral-300"></ul>
+      <p class="text-sm text-neutral-500 mt-2">Edit the <code>shows</code> array in the HTML to add dates.</p>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="max-w-6xl mx-auto px-4 py-14">
+    <h2 class="text-2xl sm:text-3xl font-bold">About</h2>
+    <div class="mt-4 grid md:grid-cols-3 gap-6 items-start">
+      <img alt="Reesh press photo" src="https://picsum.photos/seed/reesh/900/600" class="rounded-2xl border border-neutral-800 w-full md:col-span-1">
+      <div class="md:col-span-2 text-neutral-300">
+        <p>Bollytekk architect. Mixing tablas and sitars with modern trap and cloud rap textures. Known for hard-hitting drums, layered melodies, and cross-cultural wordplay.</p>
+        <p class="mt-3">Highlights: <span class="text-neutral-200">[Press outlet]</span>, <span class="text-neutral-200">[Festival]</span>, <span class="text-neutral-200">[Collab]</span>. For the full EPK, see below.</p>
+        <div class="mt-4 flex gap-3">
+          <a class="px-4 py-2 rounded-xl border border-neutral-700 hover:border-neutral-500" href="#contact">Contact</a>
+          <a class="px-4 py-2 rounded-xl bg-white text-black" href="#epk">Download EPK</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact / EPK -->
+  <section id="contact" class="max-w-6xl mx-auto px-4 py-14">
+    <h2 class="text-2xl sm:text-3xl font-bold">Contact</h2>
+    <div class="mt-4 grid md:grid-cols-2 gap-6 items-start">
+      <form class="card border border-neutral-800 p-4" onsubmit="return false;">
+        <label class="text-sm text-neutral-400">Name</label>
+        <input class="w-full mt-1 p-3 rounded-xl bg-neutral-900 border border-neutral-800" placeholder="Your name" />
+        <label class="text-sm text-neutral-400 mt-4">Email</label>
+        <input class="w-full mt-1 p-3 rounded-xl bg-neutral-900 border border-neutral-800" placeholder="you@example.com" type="email" />
+        <label class="text-sm text-neutral-400 mt-4">Message</label>
+        <textarea class="w-full mt-1 p-3 rounded-xl bg-neutral-900 border border-neutral-800" rows="5" placeholder="Booking / collab / press..."></textarea>
+        <a href="mailto:booking@yourdomain.com" class="mt-4 inline-block px-5 py-3 rounded-2xl bg-white text-black font-semibold">Send via Email</a>
+        <p class="text-xs text-neutral-500 mt-2">For a real form without a backend, replace the button with a Formspree link.</p>
+      </form>
+      <div id="epk" class="card border border-neutral-800 p-4">
+        <h3 class="font-semibold">EPK (Electronic Press Kit)</h3>
+        <ul class="list-disc list-inside text-neutral-300 mt-2">
+          <li>Bio + Highlights (PDF)</li>
+          <li>Press photos (ZIP)</li>
+          <li>Logo/brand assets (PNG/SVG)</li>
+          <li>Stage plot / tech rider</li>
+        </ul>
+        <p class="text-sm text-neutral-400 mt-3">Place files in <code>/assets/epk/</code> and link them here.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-neutral-800/60">
+    <div class="max-w-6xl mx-auto px-4 py-10 text-sm text-neutral-400">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <p>© <span id="year"></span> REESH. All rights reserved.</p>
+        <div class="flex gap-4">
+          <a href="#top" class="hover:text-white">Back to top</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ====== DATA you can edit ======
+    const tracks = [
+      { title: "Bollytekk Intro", src: "assets/tracks/bollytekk-intro.mp3", tag: "Single" },
+      { title: "Monsoon Freestyle", src: "assets/tracks/monsoon-freestyle.mp3", tag: "Freestyle" },
+      { title: "Sitar & 808s", src: "assets/tracks/sitar-808s.mp3", tag: "EP" },
+      { title: "Midnight in Mumbai", src: "assets/tracks/midnight-in-mumbai.mp3", tag: "Single" },
+      { title: "Ghungroo Bounce", src: "assets/tracks/ghungroo-bounce.mp3", tag: "Single" }
+    ];
+
+    const shows = [
+      { date: "2025-09-12", city: "Baltimore, MD", venue: "Ottobar", note: "w/ Special Guests" },
+      { date: "2025-10-04", city: "Washington, DC", venue: "Songbyrd", note: "Headline" },
+      { date: "2025-11-15", city: "NYC, NY", venue: "Baby's All Right", note: "EP Release" }
+    ];
+
+    // ====== Player logic ======
+    const player = document.getElementById('player');
+    const nowTitle = document.getElementById('nowTitle');
+    const nowTime = document.getElementById('nowTime');
+    const playPause = document.getElementById('playPause');
+    const seek = document.getElementById('seek');
+    const queue = document.getElementById('queue');
+    const tracksGrid = document.getElementById('tracksGrid');
+
+    let currentIndex = 0;
+
+    function formatTime(sec){ sec = Math.floor(sec||0); const m = Math.floor(sec/60), s = String(sec%60).padStart(2,'0'); return `${m}:${s}`; }
+
+    function loadTrack(i){
+      currentIndex = i;
+      const t = tracks[i];
+      player.src = t.src;
+      nowTitle.textContent = t.title;
+      player.addEventListener('loadedmetadata', ()=>{
+        nowTime.textContent = `0:00 / ${formatTime(player.duration)}`;
+        seek.value = 0;
+      }, { once: true });
+    }
+
+    function renderQueue(){
+      queue.innerHTML = '';
+      tracks.forEach((t, i) => {
+        const li = document.createElement('li');
+        li.className = 'flex items-center justify-between p-3 hover:bg-neutral-900/60 rounded-xl cursor-pointer';
+        li.innerHTML = `<div><p class="font-medium">${t.title}</p><p class="text-xs text-neutral-400">${t.tag}</p></div><span class="text-xs text-neutral-500">${i===currentIndex?'●':''}</span>`;
+        li.onclick = () => { loadTrack(i); player.play(); };
+        queue.appendChild(li);
+      });
+    }
+
+    function renderCards(){
+      tracksGrid.innerHTML = '';
+      tracks.forEach((t, i) => {
+        const card = document.createElement('div');
+        card.className = 'card border border-neutral-800 p-4 hover:border-neutral-600 transition cursor-pointer';
+        card.innerHTML = `<h4 class="font-semibold">${t.title}</h4><p class="text-sm text-neutral-400">${t.tag}</p><button class="mt-3 px-4 py-2 rounded-xl border border-neutral-700 hover:border-neutral-500">Play</button>`;
+        card.querySelector('button').onclick = () => { loadTrack(i); player.play(); };
+        tracksGrid.appendChild(card);
+      });
+    }
+
+    playPause.addEventListener('click', () => {
+      if(player.paused){ player.play(); } else { player.pause(); }
+    });
+
+    player.addEventListener('play', ()=>{ playPause.textContent = 'Pause'; renderQueue(); });
+    player.addEventListener('pause', ()=>{ playPause.textContent = 'Play'; });
+
+    player.addEventListener('timeupdate', ()=>{
+      if (!isNaN(player.duration)) {
+        nowTime.textContent = `${formatTime(player.currentTime)} / ${formatTime(player.duration)}`;
+        seek.value = (player.currentTime / player.duration) * 100;
+      }
+    });
+
+    seek.addEventListener('input', ()=>{
+      if (!isNaN(player.duration)) {
+        player.currentTime = (seek.value/100) * player.duration;
+      }
+    });
+
+    player.addEventListener('ended', ()=>{
+      const next = (currentIndex + 1) % tracks.length;
+      loadTrack(next); player.play();
+    });
+
+    // Shows
+    const showsList = document.getElementById('showsList');
+    function renderShows(){
+      showsList.innerHTML = '';
+      shows.forEach(s => {
+        const li = document.createElement('li');
+        const d = new Date(s.date + 'T00:00:00');
+        li.innerHTML = `<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <span class="font-medium">${d.toLocaleDateString(undefined, { month:'short', day:'2-digit', year:'numeric' })}</span>
+          <span class="text-neutral-300">${s.venue} — ${s.city}</span>
+          <span class="text-neutral-500">${s.note||''}</span>
+          <a class="px-3 py-1 rounded-xl border border-neutral-700 hover:border-neutral-500 text-sm" href="#">Tickets</a>
+        </div>`;
+        showsList.appendChild(li);
+      });
+    }
+
+    // Init
+    document.getElementById('year').textContent = new Date().getFullYear();
+    loadTrack(0);
+    renderQueue();
+    renderCards();
+    renderShows();
+  </script>
+</body>
+</html>
